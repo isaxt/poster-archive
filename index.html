@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PASTE — Poster Archive</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Caveat:wght@400;500;600&family=Lato:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-mark">P</span>
+        <span class="logo-text">ASTE</span>
+        <span class="logo-tagline">/ poster archive</span>
+      </div>
+      <nav class="header-nav">
+        <span class="post-count" id="postCount">— posters</span>
+        <button class="btn-upload" id="openUploadBtn">
+          <span class="btn-icon">+</span>
+          Add Poster
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== FILTER BAR ===== -->
+  <div class="filter-bar">
+    <div class="filter-inner">
+      <button class="filter-chip active" data-filter="all">All</button>
+      <button class="filter-chip" data-filter="music">Music</button>
+      <button class="filter-chip" data-filter="film">Film</button>
+      <button class="filter-chip" data-filter="art">Art</button>
+      <button class="filter-chip" data-filter="event">Event</button>
+      <button class="filter-chip" data-filter="political">Political</button>
+      <button class="filter-chip" data-filter="advertising">Advertising</button>
+      <button class="filter-chip" data-filter="other">Other</button>
+      <div class="filter-divider"></div>
+      <div class="sort-wrapper">
+        <label class="sort-label">Sort</label>
+        <select class="sort-select" id="sortSelect">
+          <option value="newest">Newest first</option>
+          <option value="oldest">Oldest first</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MAIN GALLERY ===== -->
+  <main class="gallery-container" id="galleryContainer">
+    <div class="masonry-grid" id="masonryGrid">
+      <!-- Posters injected here -->
+    </div>
+    <div class="empty-state" id="emptyState" style="display:none;">
+      <div class="empty-icon">◻</div>
+      <p class="empty-title">No posters yet.</p>
+      <p class="empty-sub">Be the first to add something to the archive.</p>
+      <button class="btn-upload" id="emptyUploadBtn">
+        <span class="btn-icon">+</span>
+        Add Poster
+      </button>
+    </div>
+  </main>
+
+  <!-- ===== UPLOAD MODAL ===== -->
+  <div class="modal-overlay" id="uploadModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="closeModalBtn" aria-label="Close">✕</button>
+      <h2 class="modal-title" id="modalTitle">Add to Archive</h2>
+
+      <div class="upload-zone" id="dropZone">
+        <div class="upload-preview" id="uploadPreview" style="display:none;">
+          <img id="previewImg" src="" alt="Preview" />
+          <button class="preview-remove" id="removePreview">✕ remove</button>
+        </div>
+        <div class="upload-prompt" id="uploadPrompt">
+          <div class="upload-icon">⬆</div>
+          <p class="upload-main">Drop your image here</p>
+          <p class="upload-sub">or <label class="file-link" for="fileInput">browse files</label></p>
+          <p class="upload-formats">JPG, PNG, WEBP, GIF — max 10 MB</p>
+        </div>
+        <input type="file" id="fileInput" accept="image/*" hidden />
+      </div>
+
+      <div class="form-fields">
+        <div class="form-row">
+          <label class="form-label" for="posterTitle">Title</label>
+          <input class="form-input" id="posterTitle" type="text" placeholder="e.g. Woodstock 1969" maxlength="80" />
+        </div>
+        <div class="form-row">
+          <label class="form-label" for="posterArtist">Designer / Artist</label>
+          <input class="form-input" id="posterArtist" type="text" placeholder="e.g. Wes Wilson" maxlength="80" />
+        </div>
+        <div class="form-row">
+          <label class="form-label" for="posterYear">Year</label>
+          <input class="form-input" id="posterYear" type="text" placeholder="e.g. 1969" maxlength="4" />
+        </div>
+        <div class="form-row">
+          <label class="form-label" for="posterCategory">Category</label>
+          <select class="form-select" id="posterCategory">
+            <option value="music">Music</option>
+            <option value="film">Film</option>
+            <option value="art">Art</option>
+            <option value="event">Event</option>
+            <option value="political">Political</option>
+            <option value="advertising">Advertising</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label class="form-label" for="posterNotes">Notes <span class="optional">(optional)</span></label>
+          <textarea class="form-textarea" id="posterNotes" placeholder="Anything interesting about this poster…" maxlength="400" rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-cancel" id="cancelBtn">Cancel</button>
+        <button class="btn-submit" id="submitBtn">Add to Archive</button>
+      </div>
+
+      <div class="upload-error" id="uploadError" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- ===== LIGHTBOX ===== -->
+  <div class="lightbox-overlay" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+    <div class="lightbox-inner">
+      <div class="lightbox-img-wrap">
+        <img id="lightboxImg" src="" alt="" />
+      </div>
+      <div class="lightbox-meta" id="lightboxMeta">
+        <!-- meta injected -->
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
