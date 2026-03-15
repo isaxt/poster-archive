@@ -8,7 +8,7 @@
   'use strict';
 
   // ─── Storage key ───────────────────────────
-  const STORAGE_KEY = 'paste_posters_v1';
+  const STORAGE_KEY = 'paste_posters_v4';
 
   // ─── State ─────────────────────────────────
   let posters = [];
@@ -37,7 +37,7 @@
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       posters = raw ? JSON.parse(raw) : getSeedPosters();
-      if (!raw) savePosters(); // persist seed data
+      if (!raw) savePosters();
     } catch (e) {
       posters = getSeedPosters();
     }
@@ -51,75 +51,57 @@
     }
   }
 
-  // Seed posters using free, public-domain placeholder images
+  // Seed posters — local files from the /posters folder
   function getSeedPosters() {
     const now = Date.now();
     return [
       {
-        id: uid(),
-        title: 'Metropolis',
-        artist: 'Heinz Schulz-Neudamm',
-        year: '1927',
-        category: 'film',
-        notes: 'One of the most valuable film posters ever created. Art deco masterpiece.',
-        imageData: null,
-        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Metropolis_Film_poster.jpg/400px-Metropolis_Film_poster.jpg',
-        addedAt: now - 86400000 * 5
+        id: uid(), title: 'Abstract', artist: '', year: '', category: 'art', notes: '',
+        imageData: null, imageUrl: 'posters/abstract.png', addedAt: now - 86400000 * 11
       },
       {
-        id: uid(),
-        title: 'Moulin Rouge',
-        artist: 'Henri de Toulouse-Lautrec',
-        year: '1891',
-        category: 'art',
-        notes: 'Iconic lithograph advertising poster. Among the first great modern posters.',
-        imageData: null,
-        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Henri_de_Toulouse-Lautrec_-_Moulin_Rouge-_La_Goulue_%28Art_Institute_of_Chicago%29_adjusted.jpg/400px-Henri_de_Toulouse-Lautrec_-_Moulin_Rouge-_La_Goulue_%28Art_Institute_of_Chicago%29_adjusted.jpg',
-        addedAt: now - 86400000 * 4
+        id: uid(), title: 'AI Psych', artist: '', year: '', category: 'art', notes: '',
+        imageData: null, imageUrl: 'posters/ai_psych.png', addedAt: now - 86400000 * 10
       },
       {
-        id: uid(),
-        title: 'Uncle Sam Wants You',
-        artist: 'James Montgomery Flagg',
-        year: '1917',
-        category: 'political',
-        notes: 'Originally used for WWI army recruitment. Later reprinted for WWII.',
-        imageData: null,
-        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Unclesamwantyou.jpg/400px-Unclesamwantyou.jpg',
-        addedAt: now - 86400000 * 3
+        id: uid(), title: 'Beauty Within', artist: '', year: '', category: 'art', notes: '',
+        imageData: null, imageUrl: 'posters/beauty_within.png', addedAt: now - 86400000 * 9
       },
       {
-        id: uid(),
-        title: 'Vertigo',
-        artist: 'Saul Bass',
-        year: '1958',
-        category: 'film',
-        notes: 'Saul Bass defined a generation of film title sequences and posters.',
-        imageData: null,
-        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Vertigomovie_restoration.jpg/400px-Vertigomovie_restoration.jpg',
-        addedAt: now - 86400000 * 2
+        id: uid(), title: 'CD Talk', artist: '', year: '', category: 'event', notes: '',
+        imageData: null, imageUrl: 'posters/cd_talk.png', addedAt: now - 86400000 * 8
       },
       {
-        id: uid(),
-        title: 'Keep Calm and Carry On',
-        artist: 'Ministry of Information (UK)',
-        year: '1939',
-        category: 'political',
-        notes: 'WWII motivational poster. Rarely distributed at the time; discovered in 2000.',
-        imageData: null,
-        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Keep_Calm_and_Carry_On_Poster.svg/400px-Keep_Calm_and_Carry_On_Poster.svg.png',
-        addedAt: now - 86400000 * 1
+        id: uid(), title: 'Class Catalog', artist: '', year: '', category: 'event', notes: '',
+        imageData: null, imageUrl: 'posters/class_catalog.png', addedAt: now - 86400000 * 7
       },
       {
-        id: uid(),
-        title: 'Fillmore West',
-        artist: 'Victor Moscoso',
-        year: '1967',
-        category: 'music',
-        notes: 'Psychedelic concert poster. Moscoso pioneered vibrating color combinations.',
-        imageData: null,
-        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Victor_Moscoso-_Neon_Rose_13.jpg/400px-Victor_Moscoso-_Neon_Rose_13.jpg',
-        addedAt: now
+        id: uid(), title: 'Creative Open Call', artist: '', year: '', category: 'event', notes: '',
+        imageData: null, imageUrl: 'posters/creative_open_call.png', addedAt: now - 86400000 * 6
+      },
+      {
+        id: uid(), title: 'Synergies', artist: '', year: '', category: 'event', notes: '',
+        imageData: null, imageUrl: 'posters/fashion_grad.JPG', addedAt: now - 86400000 * 5
+      },
+      {
+        id: uid(), title: 'Fragmented Hope', artist: '', year: '', category: 'art', notes: '',
+        imageData: null, imageUrl: 'posters/fragmented hope.png', addedAt: now - 86400000 * 4
+      },
+      {
+        id: uid(), title: 'Is It Fate', artist: '', year: '', category: 'art', notes: '',
+        imageData: null, imageUrl: 'posters/is_it_fate.png', addedAt: now - 86400000 * 3
+      },
+      {
+        id: uid(), title: 'Mocca', artist: '', year: '', category: 'advertising', notes: '',
+        imageData: null, imageUrl: 'posters/mocca.png', addedAt: now - 86400000 * 2
+      },
+      {
+        id: uid(), title: 'Party Poster', artist: '', year: '', category: 'event', notes: '',
+        imageData: null, imageUrl: 'posters/party_poster.PNG', addedAt: now - 86400000 * 1
+      },
+      {
+        id: uid(), title: 'Transdisciplinary', artist: '', year: '', category: 'event', notes: '',
+        imageData: null, imageUrl: 'posters/transdiscplinary.PNG', addedAt: now
       }
     ];
   }
@@ -158,7 +140,7 @@
           src="${escHtml(imgSrc)}"
           alt="${escHtml(poster.title)}"
           loading="lazy"
-          onerror="this.style.minHeight='120px';this.style.background='#232120'"
+          onerror="this.style.minHeight='120px';this.style.background='#f5ede2'"
         />
       </div>
       <div class="card-overlay"></div>
@@ -292,12 +274,10 @@
     submitBtn.disabled = true;
     submitBtn.textContent = 'Adding…';
 
-    // Slight delay for UX feel
     setTimeout(() => {
       posters.unshift(poster);
       savePosters();
 
-      // Reset filter to show all so new poster is visible
       activeFilter = 'all';
       document.querySelectorAll('.filter-chip').forEach(c => {
         c.classList.toggle('active', c.dataset.filter === 'all');
@@ -356,10 +336,8 @@
   });
 
   submitBtn.addEventListener('click', handleSubmit);
-
   document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
 
-  // Close on overlay click
   uploadModal.addEventListener('click', (e) => {
     if (e.target === uploadModal) closeUploadModal();
   });
@@ -370,7 +348,6 @@
     }
   });
 
-  // Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       if (lightbox.classList.contains('open')) closeLightbox();
@@ -378,7 +355,6 @@
     }
   });
 
-  // Filter chips
   document.querySelectorAll('.filter-chip').forEach(chip => {
     chip.addEventListener('click', () => {
       document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
@@ -388,7 +364,6 @@
     });
   });
 
-  // Sort
   document.getElementById('sortSelect').addEventListener('change', (e) => {
     activeSort = e.target.value;
     renderGallery();
