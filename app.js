@@ -8,7 +8,7 @@
   'use strict';
 
   // ─── Storage key ───────────────────────────
-  const STORAGE_KEY = 'paste_posters_v5';
+  const STORAGE_KEY = 'paste_posters_v6';
 
   // ─── State ─────────────────────────────────
   let posters = [];
@@ -53,59 +53,102 @@
 
   // Seed posters — local files from the /posters folder
   function getSeedPosters() {
-    const now = Date.now();
-    return [
-      {
-        id: uid(), title: 'Abstract', artist: '', year: '', category: 'art', notes: '',
-        imageData: null, imageUrl: 'posters/abstract.png', addedAt: now - 86400000 * 11
-      },
-      {
-        id: uid(), title: 'AI Psych', artist: '', year: '', category: 'art', notes: '',
-        imageData: null, imageUrl: 'posters/ai_psych.png', addedAt: now - 86400000 * 10
-      },
-      {
-        id: uid(), title: 'Beauty Within', artist: '', year: '', category: 'art', notes: '',
-        imageData: null, imageUrl: 'posters/beauty_within.png', addedAt: now - 86400000 * 9
-      },
-      {
-        id: uid(), title: 'CD Talk', artist: '', year: '', category: 'event', notes: '',
-        imageData: null, imageUrl: 'posters/cd_talk.png', addedAt: now - 86400000 * 8
-      },
-      {
-        id: uid(), title: 'Class Catalog', artist: '', year: '', category: 'event', notes: '',
-        imageData: null, imageUrl: 'posters/class_catalog.png', addedAt: now - 86400000 * 7
-      },
-      {
-        id: uid(), title: 'Creative Open Call', artist: '', year: '', category: 'event', notes: '',
-        imageData: null, imageUrl: 'posters/creative_open_call.png', addedAt: now - 86400000 * 6
-      },
-      {
-        id: uid(), title: 'Synergies', artist: '', year: '', category: 'event', notes: '',
-        imageData: null, imageUrl: 'posters/fashion_grad.JPG', addedAt: now - 86400000 * 5
-      },
-      {
-        id: uid(), title: 'Fragmented Hope', artist: '', year: '', category: 'art', notes: '',
-        imageData: null, imageUrl: 'posters/fragmented_hope.png', addedAt: now - 86400000 * 4
-      },
-      {
-        id: uid(), title: 'Is It Fate', artist: '', year: '', category: 'art', notes: '',
-        imageData: null, imageUrl: 'posters/is_it_fate.png', addedAt: now - 86400000 * 3
-      },
-      {
-        id: uid(), title: 'Mocca', artist: '', year: '', category: 'advertising', notes: '',
-        imageData: null, imageUrl: 'posters/mocca.png', addedAt: now - 86400000 * 2
-      },
-      {
-        id: uid(), title: 'Party Poster', artist: '', year: '', category: 'event', notes: '',
-        imageData: null, imageUrl: 'posters/party_poster.PNG', addedAt: now - 86400000 * 1
-      },
-      {
-        id: uid(), title: 'Transdisciplinary', artist: '', year: '', category: 'event', notes: '',
-        imageData: null, imageUrl: 'posters/transdiscplinary.PNG', addedAt: now
-      }
-    ];
-  }
+  const now = Date.now();
+  const files = [
+    { file: 'a_typography.png',        title: 'A Typography',         category: 'art'         },
+    { file: 'abstract_bodies.png',     title: 'Abstract Bodies',      category: 'art'         },
+    { file: 'abstract.png',            title: 'Abstract',             category: 'art'         },
+    { file: 'ai_plant.png',            title: 'AI Plant',             category: 'art'         },
+    { file: 'ai_psych.png',            title: 'AI Psych',             category: 'art'         },
+    { file: 'anthology_censor.png',    title: 'Anthology Censor',     category: 'art'         },
+    { file: 'art_statement_2.png',     title: 'Art Statement 2',      category: 'art'         },
+    { file: 'art_statement_3.png',     title: 'Art Statement 3',      category: 'art'         },
+    { file: 'art_statement_4.png',     title: 'Art Statement 4',      category: 'art'         },
+    { file: 'art_statement.png',       title: 'Art Statement',        category: 'art'         },
+    { file: 'beauty_within.png',       title: 'Beauty Within',        category: 'art'         },
+    { file: 'blue_qr.png',             title: 'Blue QR',              category: 'art'         },
+    { file: 'brooklyn_exhibition.png', title: 'Brooklyn Exhibition',  category: 'event'       },
+    { file: 'catnip.png',              title: 'Catnip',               category: 'art'         },
+    { file: 'cd_lecture.png',          title: 'CD Lecture',           category: 'event'       },
+    { file: 'cd_talk.png',             title: 'CD Talk',              category: 'event'       },
+    { file: 'class_catalog.png',       title: 'Class Catalog',        category: 'event'       },
+    { file: 'collage_poster.png',      title: 'Collage Poster',       category: 'art'         },
+    { file: 'color_art.png',           title: 'Color Art',            category: 'art'         },
+    { file: 'columbia_engineering.png',title: 'Columbia Engineering', category: 'event'       },
+    { file: 'cool spiral.png',         title: 'Cool Spiral',          category: 'art'         },
+    { file: 'crazy_graphics.png',      title: 'Crazy Graphics',       category: 'art'         },
+    { file: 'creative_open_call.png',  title: 'Creative Open Call',   category: 'event'       },
+    { file: 'cute_letter.png',         title: 'Cute Letter',          category: 'art'         },
+    { file: 'daemons.png',             title: 'Daemons',              category: 'art'         },
+    { file: 'day_ta.png',              title: 'Day TA',               category: 'event'       },
+    { file: 'design_before.png',       title: 'Design Before',        category: 'art'         },
+    { file: 'enthographic_media.png',  title: 'Ethnographic Media',   category: 'event'       },
+    { file: 'exhibition_poster.png',   title: 'Exhibition Poster',    category: 'event'       },
+    { file: 'f_train.png',             title: 'F Train',              category: 'art'         },
+    { file: 'fallen_poster.png',       title: 'Fallen Poster',        category: 'art'         },
+    { file: 'fashion_grad.JPG',        title: 'Synergies',            category: 'event'       },
+    { file: 'fbi_film.png',            title: 'FBI Film',             category: 'event'       },
+    { file: 'food_allergy.png',        title: 'Food Allergy',         category: 'advertising' },
+    { file: 'fragmented_hope.png',     title: 'Fragmented Hope',      category: 'art'         },
+    { file: 'french.png',              title: 'French',               category: 'art'         },
+    { file: 'friends.png',             title: 'Friends',              category: 'art'         },
+    { file: 'gug_panel.png',           title: 'Gug Panel',            category: 'event'       },
+    { file: 'i_love.png',              title: 'I Love',               category: 'art'         },
+    { file: 'illustration_mixer.png',  title: 'Illustration Mixer',   category: 'event'       },
+    { file: 'imagine.png',             title: 'Imagine',              category: 'art'         },
+    { file: 'is_it_fate.png',          title: 'Is It Fate',           category: 'art'         },
+    { file: 'kite_city.png',           title: 'Kite City',            category: 'art'         },
+    { file: 'learn_art.png',           title: 'Learn Art',            category: 'event'       },
+    { file: 'local_s3.png',            title: 'Local S3',             category: 'art'         },
+    { file: 'love_messengers.png',     title: 'Love Messengers',      category: 'art'         },
+    { file: 'mai.png',                 title: 'Mai',                  category: 'art'         },
+    { file: 'man_trapped.png',         title: 'Man Trapped',          category: 'art'         },
+    { file: 'media_res.png',           title: 'Media Res',            category: 'event'       },
+    { file: 'mocca.png',               title: 'Mocca',                category: 'advertising' },
+    { file: 'new_yorker.png',          title: 'New Yorker',           category: 'art'         },
+    { file: 'no_wifi.png',             title: 'No WiFi',              category: 'art'         },
+    { file: 'party_poster.PNG',        title: 'Party Poster',         category: 'event'       },
+    { file: 'pattern_freak.png',       title: 'Pattern Freak',        category: 'art'         },
+    { file: 'photo_crit.PNG',          title: 'Photo Crit',           category: 'event'       },
+    { file: 'photo_fest.png',          title: 'Photo Fest',           category: 'event'       },
+    { file: 'pink_redacted.png',       title: 'Pink Redacted',        category: 'art'         },
+    { file: 'plant_tag.png',           title: 'Plant Tag',            category: 'art'         },
+    { file: 'praxis.png',              title: 'Praxis',               category: 'event'       },
+    { file: 'president_protocol.png',  title: 'President Protocol',   category: 'event'       },
+    { file: 'print_show.png',          title: 'Print Show',           category: 'event'       },
+    { file: 'publication.png',         title: 'Publication',          category: 'event'       },
+    { file: 'queen_elizabeth.png',     title: 'Queen Elizabeth',      category: 'art'         },
+    { file: 'quran_snip.png',          title: 'Quran Snip',           category: 'art'         },
+    { file: 'random_stuff.png',        title: 'Random Stuff',         category: 'art'         },
+    { file: 'reader.png',              title: 'Reader',               category: 'art'         },
+    { file: 'red_city.png',            title: 'Red City',             category: 'art'         },
+    { file: 'red_poster.png',          title: 'Red Poster',           category: 'art'         },
+    { file: 'rock_climbing.png',       title: 'Rock Climbing',        category: 'advertising' },
+    { file: 'russia_china.png',        title: 'Russia China',         category: 'art'         },
+    { file: 'russian.png',             title: 'Russian',              category: 'art'         },
+    { file: 'subway_planned.png',      title: 'Subway Planned',       category: 'art'         },
+    { file: 'surveillance.png',        title: 'Surveillance',         category: 'art'         },
+    { file: 'taylor_swift.png',        title: 'Taylor Swift',         category: 'advertising' },
+    { file: 'tech_start_up.png',       title: 'Tech Start Up',        category: 'advertising' },
+    { file: 'time_frames.png',         title: 'Time Frames',          category: 'art'         },
+    { file: 'transdiscplinary.PNG',    title: 'Transdisciplinary',    category: 'event'       },
+    { file: 'vr_poster.png',           title: 'VR Poster',            category: 'event'       },
+    { file: 'welcome_sf.png',          title: 'Welcome SF',           category: 'event'       },
+    { file: 'yellow_plant.png',        title: 'Yellow Plant',         category: 'art'         },
+  ];
 
+  return files.map((p, i) => ({
+    id: uid(),
+    title: p.title,
+    artist: '',
+    year: '',
+    category: p.category,
+    notes: '',
+    imageData: null,
+    imageUrl: `posters/${p.file}`,
+    addedAt: now - (files.length - i) * 86400000
+  }));
+}
   // ─── Render gallery ────────────────────────
   function renderGallery() {
     let filtered = activeFilter === 'all'
