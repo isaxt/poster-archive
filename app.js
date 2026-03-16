@@ -8,7 +8,7 @@
   'use strict';
 
   // ─── Storage key ───────────────────────────
-  const STORAGE_KEY = 'paste_posters_v4';
+  const STORAGE_KEY = 'paste_posters_v5';
 
   // ─── State ─────────────────────────────────
   let posters = [];
@@ -85,7 +85,7 @@
       },
       {
         id: uid(), title: 'Fragmented Hope', artist: '', year: '', category: 'art', notes: '',
-        imageData: null, imageUrl: 'posters/fragmented hope.png', addedAt: now - 86400000 * 4
+        imageData: null, imageUrl: 'posters/fragmented_hope.png', addedAt: now - 86400000 * 4
       },
       {
         id: uid(), title: 'Is It Fate', artist: '', year: '', category: 'art', notes: '',
