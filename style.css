@@ -806,3 +806,39 @@ body::before {
 .poster-card {
   animation: floatIn 340ms ease both;
 }
+
+/* ADD THESE RULES TO THE BOTTOM OF YOUR style.css */
+ 
+/* Shimmer placeholder shown while image is off-screen */
+.img-skeleton {
+  background: linear-gradient(
+    90deg,
+    #f5ede2 25%,
+    #eeddd0 50%,
+    #f5ede2 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite linear;
+  min-height: 160px;
+}
+ 
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+ 
+/* Once loaded, stop shimmer and fade image in */
+.poster-img-wrap img.img-loaded {
+  animation: imgFadeIn 300ms ease both;
+}
+ 
+/* Remove shimmer background once image is in the DOM */
+.poster-img-wrap:not(.img-skeleton) {
+  background: #f5ede2;
+  animation: none;
+}
+ 
+@keyframes imgFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

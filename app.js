@@ -8,7 +8,7 @@
   'use strict';
 
   // ─── Storage key ───────────────────────────
-  const STORAGE_KEY = 'paste_posters_v7';
+  const STORAGE_KEY = 'paste_posters_v8';
 
   // ─── State ─────────────────────────────────
   let posters = [];
@@ -149,7 +149,38 @@
     addedAt: now - (files.length - i) * 86400000
   }));
 }
+
+  // ─── Intersection Observer for lazy loading ─
+  // Watches skeleton cards and swaps in real images only when visible
+  const imgObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const img = entry.target;
+      const src = img.dataset.src;
+      if (!src) return;
+
+      img.decode
+        ? img.decode().catch(() => {}).finally(() => revealImg(img, src))
+        : revealImg(img, src);
+
+      imgObserver.unobserve(img);
+    });
+  }, {
+    rootMargin: '200px 0px',   // start loading 200 px before entering viewport
+    threshold: 0
+  });
+
+  function revealImg(img, src) {
+    img.src = src;
+    img.removeAttribute('data-src');
+    img.classList.add('img-loaded');
+    img.closest('.poster-img-wrap')?.classList.remove('img-skeleton');
+  }
+
   // ─── Render gallery ────────────────────────
+  // Renders in batches of 20 to avoid a single 80-card layout hit
+  const BATCH = 20;
+
   function renderGallery() {
     let filtered = activeFilter === 'all'
       ? [...posters]
@@ -159,13 +190,28 @@
       activeSort === 'newest' ? b.addedAt - a.addedAt : a.addedAt - b.addedAt
     );
 
+    // Disconnect existing observers before clearing
+    imgObserver.disconnect();
     grid.innerHTML = '';
     emptyState.style.display = filtered.length === 0 ? 'flex' : 'none';
 
-    filtered.forEach((poster, i) => {
-      const card = buildCard(poster, i);
-      grid.appendChild(card);
-    });
+    let index = 0;
+    function renderBatch() {
+      const slice = filtered.slice(index, index + BATCH);
+      slice.forEach((poster, i) => {
+        const card = buildCard(poster, index + i);
+        grid.appendChild(card);
+        // Observe the lazy img inside the card
+        const img = card.querySelector('img[data-src]');
+        if (img) imgObserver.observe(img);
+      });
+      index += BATCH;
+      if (index < filtered.length) {
+        // Yield to browser between batches
+        setTimeout(renderBatch, 0);
+      }
+    }
+    renderBatch();
 
     postCount.textContent = `${posters.length} poster${posters.length !== 1 ? 's' : ''}`;
   }
@@ -177,13 +223,14 @@
 
     const imgSrc = poster.imageData || poster.imageUrl || '';
 
+    // Use data-src for lazy loading; add skeleton class for shimmer effect
     card.innerHTML = `
-      <div class="poster-img-wrap">
+      <div class="poster-img-wrap img-skeleton">
         <img
-          src="${escHtml(imgSrc)}"
+          data-src="${escHtml(imgSrc)}"
+          src=""
           alt="${escHtml(poster.title)}"
-          loading="lazy"
-          onerror="this.style.minHeight='120px';this.style.background='#f5ede2'"
+          onerror="this.style.minHeight='120px';this.style.background='#f5ede2';this.classList.add('img-loaded')"
         />
       </div>
       <div class="card-overlay"></div>
