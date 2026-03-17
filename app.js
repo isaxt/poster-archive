@@ -8,7 +8,7 @@
   'use strict';
 
   // ─── Storage key ───────────────────────────
-  const STORAGE_KEY = 'paste_posters_v8';
+  const STORAGE_KEY = 'paste_posters_v9';
 
   // ─── State ─────────────────────────────────
   let posters = [];
